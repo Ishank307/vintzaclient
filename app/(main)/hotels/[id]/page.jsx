@@ -118,7 +118,8 @@ function HotelDetailsContent() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const MEDIA_BASE_URL = "http://localhost:8000"
+  const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+  const MEDIA_BASE_URL = apiBase.endsWith('/api') ? apiBase.slice(0, -4) : apiBase;
 
   /* ---------------- DATE CONTEXT ---------------- */
   const checkIn = useMemo(() => {
