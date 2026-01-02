@@ -84,7 +84,7 @@ export default function SearchBar() {
         >
             {/* Where */}
             <div
-                className="flex-[2] flex flex-col justify-center px-4 sm:px-6 py-3 
+                className="w-full md:flex-[2] flex flex-col justify-center px-4 sm:px-6 py-3 
                 border-b md:border-b-0 md:border-r border-gray-200 relative 
                 hover:bg-gray-50 transition-colors cursor-pointer 
                 rounded-t-lg md:rounded-l-full md:rounded-tr-none"
@@ -108,55 +108,58 @@ export default function SearchBar() {
                 )}
             </div>
 
-            {/* When */}
-            <div
-                className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-3 
-                border-b md:border-b-0 md:border-r border-gray-200 relative 
-                hover:bg-gray-50 transition-colors cursor-pointer"
-                onClick={() => {
-                    setShowDates(!showDates)
-                    setShowLocation(false)
-                    setShowGuests(false)
-                }}
-            >
-                <label className="text-xs font-semibold text-gray-900 mb-0.5">When</label>
-                <div className="text-sm text-gray-600">{formattedDates}</div>
+            {/* Mobile: Date & Guests Wrapper */}
+            <div className="flex w-full md:contents border-b border-gray-200 md:border-b-0">
+                {/* When */}
+                <div
+                    className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-3 
+                    border-r border-gray-200 relative 
+                    hover:bg-gray-50 transition-colors cursor-pointer"
+                    onClick={() => {
+                        setShowDates(!showDates)
+                        setShowLocation(false)
+                        setShowGuests(false)
+                    }}
+                >
+                    <label className="text-xs font-semibold text-gray-900 mb-0.5">When</label>
+                    <div className="text-sm text-gray-600">{formattedDates}</div>
 
-                {showDates && (
-                    <div onClick={(e) => e.stopPropagation()}>
-                        <DatePicker
-                            checkIn={checkInDate}
-                            checkOut={checkOutDate}
-                            onDateChange={handleDateChange}
-                            onClose={() => setShowDates(false)}
-                        />
-                    </div>
-                )}
-            </div>
+                    {showDates && (
+                        <div onClick={(e) => e.stopPropagation()}>
+                            <DatePicker
+                                checkIn={checkInDate}
+                                checkOut={checkOutDate}
+                                onDateChange={handleDateChange}
+                                onClose={() => setShowDates(false)}
+                            />
+                        </div>
+                    )}
+                </div>
 
-            {/* Who */}
-            <div
-                className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-3 
-                border-b md:border-b-0 border-gray-200 relative 
-                hover:bg-gray-50 transition-colors cursor-pointer"
-                onClick={() => {
-                    setShowGuests(!showGuests)
-                    setShowLocation(false)
-                    setShowDates(false)
-                }}
-            >
-                <label className="text-xs font-semibold text-gray-900 mb-0.5">Who</label>
-                <div className="text-sm text-gray-600">{formattedGuests}</div>
+                {/* Who */}
+                <div
+                    className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-3 
+                    relative 
+                    hover:bg-gray-50 transition-colors cursor-pointer"
+                    onClick={() => {
+                        setShowGuests(!showGuests)
+                        setShowLocation(false)
+                        setShowDates(false)
+                    }}
+                >
+                    <label className="text-xs font-semibold text-gray-900 mb-0.5">Who</label>
+                    <div className="text-sm text-gray-600">{formattedGuests}</div>
 
-                {showGuests && (
-                    <div onClick={(e) => e.stopPropagation()}>
-                        <GuestPicker
-                            guests={guests}
-                            onGuestsChange={handleGuestsChange}
-                            onClose={() => setShowGuests(false)}
-                        />
-                    </div>
-                )}
+                    {showGuests && (
+                        <div onClick={(e) => e.stopPropagation()}>
+                            <GuestPicker
+                                guests={guests}
+                                onGuestsChange={handleGuestsChange}
+                                onClose={() => setShowGuests(false)}
+                            />
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* Search Button */}
