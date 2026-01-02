@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/Button"
 import { Card } from "@/components/ui/Card"
-import { Users, Plus, Minus } from "lucide-react"
+import { Users, Plus, Minus, AlertCircle } from "lucide-react"
 
 export default function HotelRoomSelection({
   categories,
@@ -14,6 +14,32 @@ export default function HotelRoomSelection({
   nights,
   mediaBaseUrl,
 }) {
+  // Check if there are no available rooms at all
+  const hasNoRooms = categories.length === 0
+
+  if (hasNoRooms) {
+    return (
+      <section className="mb-10">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          Select Your Rooms
+        </h2>
+        <p className="text-gray-600 mb-6">
+          Choose the best combination for your stay.
+        </p>
+
+        <div className="flex flex-col items-center justify-center py-16 px-6 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+          <AlertCircle className="h-16 w-16 text-gray-400 mb-4" />
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            No Rooms Available
+          </h3>
+          <p className="text-gray-600 text-center max-w-md">
+            Unfortunately, there are no rooms available for your selected dates. Please try different dates or adjust your search criteria.
+          </p>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="mb-10">
       <h2 className="text-2xl font-bold text-gray-900 mb-2">
