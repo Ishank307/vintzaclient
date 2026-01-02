@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/Button"
-import { Phone, User, LogOut, Calendar } from "lucide-react"
+import { Phone, User, LogOut, Calendar, Building } from "lucide-react"
 import { useState } from "react"
 import { useAuth } from "@/context/AuthContext"
 import { useRouter } from "next/navigation"
@@ -30,6 +30,10 @@ export default function LandingHeader() {
 
                 {/* Right Side Nav - Desktop */}
                 <div className="hidden md:flex items-center gap-6 text-base">
+                    <a href="https://wa.me/916361185700" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-700 hover:text-primary transition-colors">
+                        <Building className="h-4 w-4" />
+                        <span className="font-medium">List your property</span>
+                    </a>
                     <Link href="/explore" className="text-gray-700 hover:text-gray-900 transition-colors">
                         Explore
                     </Link>

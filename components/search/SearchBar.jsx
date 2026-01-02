@@ -48,6 +48,31 @@ export default function SearchBar() {
             return
         }
 
+        // Save to Recent Searches
+        try {
+            const newSearch = {
+                location,
+                query: `location=${encodeURIComponent(location)}&check_in=${format(checkInDate, "yyyy-MM-dd")}&check_out=${format(checkOutDate, "yyyy-MM-dd")}&guests=${guests}`,
+                timestamp: Date.now()
+            }
+
+            const existingSearches = JSON.parse(localStorage.getItem('recent_searches') || '[]')
+
+            // Remove any existing search with the same location to avoid duplicates
+            const filteredSearches = existingSearches.filter(s => s.location !== newSearch.location)
+
+            // Add new search to start and keep max 3
+            const updatedSearches = [newSearch, ...filteredSearches].slice(0, 3)
+
+            localStorage.setItem('recent_searches', JSON.stringify(updatedSearches))
+
+            // Trigger a storage event manually if needed (not strictly necessary since we navigate away, but help for SPA updates)
+            window.dispatchEvent(new Event('storage'))
+
+        } catch (err) {
+            console.error("Failed to save recent search", err)
+        }
+
         router.push(
             `/search?location=${encodeURIComponent(location)}&check_in=${format(checkInDate, "yyyy-MM-dd")}&check_out=${format(checkOutDate, "yyyy-MM-dd")}&guests=${guests}`
         )
@@ -84,7 +109,7 @@ export default function SearchBar() {
         >
             {/* Where */}
             <div
-                className="w-full md:flex-[2] flex flex-col justify-center px-4 sm:px-6 py-3 
+                className="w-full md:flex-[2] flex flex-col justify-center px-4 sm:px-6 py-4 
                 border-b md:border-b-0 md:border-r border-gray-200 relative 
                 hover:bg-gray-50 transition-colors cursor-pointer 
                 rounded-t-lg md:rounded-l-full md:rounded-tr-none"
@@ -94,8 +119,8 @@ export default function SearchBar() {
                     setShowGuests(false)
                 }}
             >
-                <label className="text-xs font-semibold text-gray-900 mb-0.5">Where</label>
-                <div className="text-sm text-gray-600 truncate">{location}</div>
+                <div className="text-sm font-medium text-gray-900 truncate">{location}</div>
+                <div className="text-xs text-gray-500 truncate">Search destinations</div>
 
                 {showLocation && (
                     <div onClick={(e) => e.stopPropagation()}>
@@ -112,7 +137,7 @@ export default function SearchBar() {
             <div className="flex w-full md:contents border-b border-gray-200 md:border-b-0">
                 {/* When */}
                 <div
-                    className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-3 
+                    className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-4 
                     border-r border-gray-200 relative 
                     hover:bg-gray-50 transition-colors cursor-pointer"
                     onClick={() => {
@@ -121,8 +146,8 @@ export default function SearchBar() {
                         setShowGuests(false)
                     }}
                 >
-                    <label className="text-xs font-semibold text-gray-900 mb-0.5">When</label>
-                    <div className="text-sm text-gray-600">{formattedDates}</div>
+                    <div className="text-sm font-medium text-gray-900">{formattedDates}</div>
+                    <div className="text-xs text-gray-500">Add dates</div>
 
                     {showDates && (
                         <div onClick={(e) => e.stopPropagation()}>
@@ -138,7 +163,7 @@ export default function SearchBar() {
 
                 {/* Who */}
                 <div
-                    className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-3 
+                    className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-4 
                     relative 
                     hover:bg-gray-50 transition-colors cursor-pointer"
                     onClick={() => {
@@ -147,8 +172,8 @@ export default function SearchBar() {
                         setShowDates(false)
                     }}
                 >
-                    <label className="text-xs font-semibold text-gray-900 mb-0.5">Who</label>
-                    <div className="text-sm text-gray-600">{formattedGuests}</div>
+                    <div className="text-sm font-medium text-gray-900">{formattedGuests}</div>
+                    <div className="text-xs text-gray-500">Add guests</div>
 
                     {showGuests && (
                         <div onClick={(e) => e.stopPropagation()}>

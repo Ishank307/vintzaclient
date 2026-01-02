@@ -41,6 +41,22 @@ export default function HomePage() {
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0)
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
+  const [recentSearches, setRecentSearches] = useState([])
+
+  // Load recent searches on mount
+  useState(() => {
+    // Only access localStorage on client
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('recent_searches')
+        if (saved) {
+          setRecentSearches(JSON.parse(saved))
+        }
+      } catch (e) {
+        console.error("Failed to load recent searches", e)
+      }
+    }
+  }, [])
 
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50
@@ -89,6 +105,22 @@ export default function HomePage() {
             <Suspense fallback={<div>Loading...</div>}>
               <SearchBar />
             </Suspense>
+
+            {/* Quick Search Buttons (Desktop Only) - Recent Searches */}
+            {recentSearches.length > 0 && (
+              <div className="hidden md:flex justify-center items-center mt-8 gap-4 animate-fade-in-up">
+                <span className="text-sm font-medium text-gray-500">Continue your search:</span>
+                <div className="flex gap-3">
+                  {recentSearches.map((search, index) => (
+                    <Link key={index} href={`/search?${search.query}`}>
+                      <button className="px-6 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 shadow-sm text-sm font-semibold text-gray-700 hover:bg-white hover:shadow-md hover:text-primary transition-all duration-300">
+                        {search.location}
+                      </button>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
