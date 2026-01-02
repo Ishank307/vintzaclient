@@ -3,9 +3,11 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Home, Compass, Briefcase, Star, User } from "lucide-react"
+import { useAuth } from "@/context/AuthContext"
 
 export default function MobileBottomNav() {
     const pathname = usePathname()
+    const { isAuth } = useAuth()
 
     const navItems = [
         {
@@ -30,7 +32,7 @@ export default function MobileBottomNav() {
         },
         {
             name: "Account",
-            href: "/login", // Points to login/profile logic usually handled by page or redirect
+            href: isAuth ? "/profile" : "/login",
             icon: User,
         },
     ]

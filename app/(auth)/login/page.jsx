@@ -160,10 +160,10 @@ export default function LoginPage() {
             </header>
 
             {/* Main */}
-            <main className="flex items-center justify-center flex-grow px-4 relative z-10">
-                <div className="w-full max-w-md p-8 space-y-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20">
+            <main className="flex items-center justify-center flex-grow px-4 pb-12 sm:pb-0 relative z-10">
+                <div className="w-full max-w-md p-6 sm:p-8 space-y-6 sm:space-y-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20">
                     <div>
-                        <h2 className="text-3xl font-bold text-center text-white">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-center text-white">
                             Login with Email
                         </h2>
                         <p className="mt-2 text-sm text-center text-white/90">
