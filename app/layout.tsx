@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Dandeli Vintage Resorts",
   description: "Book your perfect getaway at Dandeli Vintage Resorts",
+  verification: {
+    google: "ropQa91cB02Q53bALo9DusFduQAGE_TUDHJlEMRzeo0",
+  },
 };
 
 export default function RootLayout({
