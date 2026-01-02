@@ -1,4 +1,4 @@
-"use client"
+
 
 import { getExploreRooms } from "@/lib/api"
 import ExploreSection from "../../../components/ExploreSecton"
