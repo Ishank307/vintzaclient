@@ -21,7 +21,7 @@ export default function SearchBar() {
     const [showDates, setShowDates] = useState(false)
     const [showGuests, setShowGuests] = useState(false)
     const [location, setLocation] = useState(
-        searchParams.get("location") || "Dandeli, Karnataka, India"
+        searchParams.get("location") || "Dandeli, India"
     )
 
     const [checkInDate, setCheckInDate] = useState(

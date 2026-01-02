@@ -531,15 +531,15 @@ function BookingContent() {
                     <h1 className="text-3xl font-bold mb-6 text-gray-900">Review & Confirm Stay</h1>
 
                     {/* Call Banner */}
-                    <div className="flex items-center justify-between bg-blue-50 border border-blue-200 p-4 rounded-lg mb-8">
-                        <div className="flex items-center">
-                            <Phone className="h-5 w-5 text-[#0066FF] mr-3" />
+                    <div className="flex flex-col sm:flex-row items-center justify-between bg-blue-50 border border-blue-200 p-4 rounded-lg mb-8 gap-4">
+                        <div className="flex items-center w-full">
+                            <Phone className="h-5 w-5 text-[#0066FF] mr-3 flex-shrink-0" />
                             <div>
                                 <p className="font-semibold text-gray-800">Call us and get more offer</p>
                                 <p className="text-sm text-gray-600">Our team is happy to help you with your booking.</p>
                             </div>
                         </div>
-                        <a href="tel:1234567890" className="text-[#0066FF] font-semibold text-sm whitespace-nowrap">
+                        <a href={`tel:${bookingData.hotel.phone_number}`} className="text-[#0066FF] font-semibold text-sm whitespace-nowrap">
                             {bookingData.hotel.phone_number}
                         </a>
                     </div>
@@ -552,7 +552,7 @@ function BookingContent() {
                             {currentStep === 1 && (
                                 <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                                     <div className="flex items-center gap-3 mb-2">
-                                        <div className="w-8 h-8 bg-[#0066FF] text-white rounded-full flex items-center justify-center font-bold">
+                                        <div className="w-8 h-8 bg-[#0066FF] text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
                                             1
                                         </div>
                                         <h2 className="text-xl font-semibold text-gray-800">Enter your details</h2>
@@ -561,7 +561,7 @@ function BookingContent() {
                                         We will use these details to share your booking information
                                     </p>
 
-                                    <div className="space-y-4 ml-11">
+                                    <div className="space-y-4 md:ml-11">
                                         <div>
                                             <label className="block text-sm font-semibold text-gray-700 mb-2">
                                                 Full Name *
@@ -650,20 +650,20 @@ function BookingContent() {
                                             </div>
                                             <h2 className="text-xl font-semibold text-gray-800">Guest details</h2>
                                         </div>
-                                        <div className="flex items-start justify-between ml-11">
+                                        <div className="flex flex-col sm:flex-row items-start justify-between md:ml-11 gap-4">
                                             <div className="flex items-center">
-                                                <div className="p-3 bg-gray-100 rounded-full">
+                                                <div className="p-3 bg-gray-100 rounded-full flex-shrink-0">
                                                     <User className="h-6 w-6 text-gray-600" />
                                                 </div>
                                                 <div className="ml-4">
-                                                    <p className="font-semibold text-gray-900">{guestDetails.name}</p>
-                                                    <p className="text-sm text-gray-500">{guestDetails.email}</p>
+                                                    <p className="font-semibold text-gray-900 break-words">{guestDetails.name}</p>
+                                                    <p className="text-sm text-gray-500 break-all">{guestDetails.email}</p>
                                                     <p className="text-sm text-gray-500">+91 {guestDetails.phone}</p>
                                                 </div>
                                             </div>
                                             <button
                                                 onClick={() => setCurrentStep(1)}
-                                                className="text-sm font-medium text-[#0066FF] hover:underline"
+                                                className="text-sm font-medium text-[#0066FF] hover:underline self-end sm:self-start"
                                             >
                                                 Edit
                                             </button>
@@ -681,7 +681,7 @@ function BookingContent() {
                                             </h2>
                                         </div>
 
-                                        <div className="space-y-4 ml-11">
+                                        <div className="space-y-4 md:ml-11">
 
                                             {/* Pay Full */}
                                             <label
@@ -696,7 +696,7 @@ function BookingContent() {
                                                     value="full"
                                                     checked={payNowType === "full"}
                                                     onChange={() => setPayNowType("full")}
-                                                    className="h-5 w-5 text-[#0066FF] mt-1"
+                                                    className="h-5 w-5 text-[#0066FF] mt-1 flex-shrink-0"
                                                 />
                                                 <div>
                                                     <h3 className="font-semibold text-gray-900">Pay full amount</h3>
@@ -719,7 +719,7 @@ function BookingContent() {
                                                     value="partial"
                                                     checked={payNowType === "partial"}
                                                     onChange={() => setPayNowType("partial")}
-                                                    className="h-5 w-5 text-[#0066FF] mt-1"
+                                                    className="h-5 w-5 text-[#0066FF] mt-1 flex-shrink-0"
                                                 />
                                                 <div>
                                                     <h3 className="font-semibold text-gray-900">
