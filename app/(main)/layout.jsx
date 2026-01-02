@@ -5,6 +5,7 @@ import LandingHeader from "@/components/layout/LandingHeader"
 import SearchHeader from "@/components/layout/SearchHeader"
 import BookingHeader from "@/components/layout/BookingHeader"
 import Footer from "@/components/layout/Footer"
+import MobileBottomNav from "@/components/layout/MobileBottomNav"
 
 export default function MainLayout({ children }) {
     const pathname = usePathname()
@@ -15,7 +16,7 @@ export default function MainLayout({ children }) {
     const isLandingPage = pathname === '/'
 
     return (
-        <div className="flex min-h-screen flex-col">
+        <div className="flex min-h-screen flex-col pb-16 md:pb-0">
             {isBookingPage && <BookingHeader />}
             {isSearchOrHotelPageOrExplore && <SearchHeader />}
             {isLandingPage && <LandingHeader />}
@@ -23,6 +24,7 @@ export default function MainLayout({ children }) {
                 {children}
             </main>
             <Footer />
+            <MobileBottomNav />
         </div>
     )
 }
