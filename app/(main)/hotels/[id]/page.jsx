@@ -1,7 +1,7 @@
 "use client"
 
 import { Suspense } from "react"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState , useRef} from "react"
 import { useParams, useSearchParams, useRouter } from "next/navigation"
 import { format, addDays } from "date-fns"
 import {
@@ -118,6 +118,8 @@ function HotelDetailsContent() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  /* go back url to properly send back to either search page or explore page */ 
+  const goBackUrlRef = useRef(null)  
   const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
   const MEDIA_BASE_URL = apiBase.endsWith('/api') ? apiBase.slice(0, -4) : apiBase;
 
@@ -317,6 +319,18 @@ function HotelDetailsContent() {
     }
   }
 
+  if (!goBackUrlRef.current) {
+    const location = searchParams.get("location")
+
+    goBackUrlRef.current = !location
+      ? "/explore"
+      : `/search?location=${encodeURIComponent(location)}&check_in=${format(
+          checkIn,
+          "yyyy-MM-dd"
+        )}&check_out=${format(checkOut, "yyyy-MM-dd")}&guests=${guests}`
+  }
+
+
   /* ---------------- LOADING / ERROR ---------------- */
   if (loading) {
     return <p className="text-center mt-20">Loading hotel…</p>
@@ -331,11 +345,11 @@ function HotelDetailsContent() {
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-6 md:px-12 lg:px-16 xl:px-24 py-6">
         <Link
-          href={`/search?location=${encodeURIComponent(searchParams.get('location'))}&check_in=${format(checkIn, "yyyy-MM-dd")}&check_out=${format(checkOut, "yyyy-MM-dd")}&guests=${guests}`}
+          href={goBackUrlRef.current}
           className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
         >
           <ChevronLeft className="h-5 w-5" />
-          <span className="ml-1 text-sm font-medium">Back to search page</span>
+          <span className="ml-1 text-sm font-medium">go Back</span>
         </Link>
         <h1 className="text-2xl md:text-3xl font-bold mb-6">{hotel.name}</h1>
 

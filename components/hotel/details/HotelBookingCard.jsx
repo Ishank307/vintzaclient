@@ -40,8 +40,9 @@ export default function HotelBookingCard({
   const hasEnoughCapacity = totalCapacity >= guests
   const hasSelectedRooms = totalRooms > 0
   const canBook = hasSelectedRooms && hasEnoughCapacity
-
+  const noRoomsAvaliable = maxPossibleCapacity == 0
   const getValidationMessage = () => {
+    if(noRoomsAvaliable) return "No rooms available for selected dates"
     if (!hasSelectedRooms) return "Please select at least one room"
     if (!hasEnoughCapacity) return `Need ${guests - totalCapacity} more guest capacity`
     return null
@@ -220,8 +221,14 @@ export default function HotelBookingCard({
 
         {/* Validation Message */}
         {validationMessage && (
-          <div className="mb-3 p-2.5 bg-amber-50 border border-amber-200 rounded-md">
-            <p className="text-xs text-amber-800 font-medium text-center">
+          <div className={`mb-3 p-2.5 rounded-md border ${
+            noRoomsAvaliable 
+              ? 'bg-red-50 border-red-200' 
+              : 'bg-amber-50 border-amber-200'
+          }`}>
+            <p className={`text-xs font-medium text-center ${
+              noRoomsAvaliable ? 'text-red-800' : 'text-amber-800'
+            }`}>
               {validationMessage}
             </p>
           </div>
