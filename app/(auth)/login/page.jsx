@@ -226,6 +226,9 @@ export default function LoginPage() {
                                         <input
                                             key={i}
                                             ref={(el) => (otpInputRefs.current[i] = el)}
+                                            type="text"
+                                            inputMode="numeric"
+                                            pattern="[0-9]*"
                                             maxLength={1}
                                             value={digit}
                                             onChange={(e) =>

@@ -57,8 +57,8 @@ const Reviews = () => {
     },
   ]
 
-  // Duplicate for infinite scrolling
-  const duplicatedReviews = [...reviews, ...reviews, ...reviews]
+  // Duplicate for infinite scrolling (2 sets for seamless 50% translation)
+  const duplicatedReviews = [...reviews, ...reviews]
 
   return (
     <section className="py-12 md:py-16 bg-gray-50 overflow-hidden">
@@ -70,15 +70,14 @@ const Reviews = () => {
           Discover why thousands of travelers choose us for their perfect stay
         </p>
 
-        {/* SCROLL WRAPPER - FIXED */}
+        {/* SCROLL WRAPPER */}
         <div className="relative w-full overflow-hidden">
-
-          {/* Infinite scroll */}
-          <div className="flex gap-4 sm:gap-6 animate-infinite-scroll hover:pause-animation">
+          {/* Mobile: scrollable, Desktop: infinite animation */}
+          <div className="flex gap-4 sm:gap-6 overflow-x-auto md:overflow-visible pb-4 md:pb-0 animate-infinite-scroll hover:pause-animation snap-x no-scrollbar">
             {duplicatedReviews.map((review, index) => (
               <div
                 key={index}
-                className="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[350px]"
+                className="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[350px] snap-center"
               >
                 <SpotlightCard spotlightColor={review.spotlightColor}>
                   <div className="flex items-center gap-1 mb-3 md:mb-4">
@@ -127,12 +126,31 @@ const Reviews = () => {
           }
         }
 
+        /* Default (Mobile): No animation, scrollable */
         .animate-infinite-scroll {
-          animation: infinite-scroll 30s linear infinite;
+          animation: none;
         }
 
-        .animate-infinite-scroll:hover {
-          animation-play-state: paused;
+        /* Desktop: Apply animation */
+        @media (min-width: 768px) {
+          .animate-infinite-scroll {
+            animation: infinite-scroll 15s linear infinite;
+            width: max-content; /* Ensure container is wide enough */
+          }
+          .animate-infinite-scroll:hover {
+            animation-play-state: paused;
+          }
+        }
+        
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
         }
       `}</style>
     </section>

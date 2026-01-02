@@ -30,7 +30,7 @@ export default function HomePage() {
       <section className="py-8 md:py-16 container mx-auto px-4">
         <div className="relative w-full h-[300px] sm:h-[350px] md:h-[400px] rounded-2xl overflow-hidden bg-gray-900">
           {/* Resort Image on the right */}
-          <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden md:block">
+          <div className="absolute top-0 bottom-0 right-0 w-full md:w-1/2 opacity-40 md:opacity-100">
             <Image
               src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=2070&auto=format&fit=crop"
               alt="Luxury Resort"
