@@ -221,9 +221,6 @@ export default function HomePage() {
             <div className="text-white max-w-md">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 md:mb-4">Explore our</h2>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8">Nature Trails</h2>
-              <Button className="bg-white text-gray-900 hover:bg-gray-100 font-bold px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg rounded-md">
-                View Packages
-              </Button>
             </div>
           </div>
         </div>

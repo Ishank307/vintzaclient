@@ -1,9 +1,10 @@
 "use client"
 
 import { useState, useEffect, Suspense } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ChevronLeft, Lock, Phone, Calendar, User, Tag } from "lucide-react"
+import { ChevronLeft, Lock, Phone, Calendar, User, Tag, Check } from "lucide-react"
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
 import { useParams, useSearchParams } from "next/navigation"
@@ -35,6 +36,7 @@ function BookingContent() {
     const searchParams = useSearchParams()
     const [bookingAttemptId, setBookingAttemptId] = useState(null)
     const [isValidatingCoupon, setIsValidatingCoupon] = useState(false)
+    const [showCelebration, setShowCelebration] = useState(false)
 
     const [isPaying, setIsPaying] = useState(false)
 
@@ -194,6 +196,8 @@ function BookingContent() {
             })
             setShowCouponInput(false)
             toast.success(`Coupon applied! ${data.discount_percentage}% discount`)
+            setShowCelebration(true)
+            setTimeout(() => setShowCelebration(false), 3500)
 
         } catch (error) {
             console.error('Coupon validation error:', error)
@@ -885,6 +889,78 @@ function BookingContent() {
                     </div>
                 </main>
             </div>
+
+            <AnimatePresence>
+                {showCelebration && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+                        onClick={() => setShowCelebration(false)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.5, opacity: 0, y: 50 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                            className="bg-white w-full max-w-sm rounded-3xl p-8 flex flex-col items-center shadow-2xl relative overflow-hidden"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {/* Confetti Background Effect (CSS-based simple particles could go here, or just a nice gradient blob) */}
+                            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                                <motion.div
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                                    className="absolute -top-20 -right-20 w-64 h-64 bg-green-100 rounded-full blur-3xl opacity-50"
+                                />
+                                <motion.div
+                                    animate={{ rotate: -360 }}
+                                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                                    className="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50"
+                                />
+                            </div>
+
+                            <motion.div
+                                initial={{ scale: 0, rotate: -180 }}
+                                animate={{ scale: 1, rotate: 0 }}
+                                transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.1 }}
+                                className="w-20 h-20 bg-gradient-to-tr from-green-400 to-emerald-600 rounded-full flex items-center justify-center mb-6 shadow-lg z-10"
+                            >
+                                <Check className="w-10 h-10 text-white" strokeWidth={4} />
+                            </motion.div>
+
+                            <motion.h3
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                                className="text-2xl font-black text-gray-900 mb-2 text-center z-10"
+                            >
+                                YAY! Coupon Applied
+                            </motion.h3>
+
+                            <motion.p
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.3 }}
+                                className="text-gray-500 text-center mb-6 z-10 font-medium"
+                            >
+                                You're saving big on this booking!
+                            </motion.p>
+
+                            <motion.div
+                                initial={{ scale: 0.8, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ delay: 0.4, type: "spring" }}
+                                className="bg-green-50 border border-green-100 text-green-700 px-6 py-3 rounded-2xl font-bold text-xl flex flex-col items-center shadow-sm w-full z-10"
+                            >
+                                <span className="text-xs font-semibold text-green-500 uppercase tracking-wider mb-1">Total Discount</span>
+                                {appliedCoupon?.discount_percentage}% OFF
+                            </motion.div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     )
 }

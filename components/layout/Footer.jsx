@@ -42,10 +42,11 @@ export default function Footer() {
                             </ul>
                         </div>
                         <div>
-                            <h4 className="text-white text-sm font-bold uppercase tracking-wider mb-4 border-b border-[#0cb1e9]/30 pb-2 inline-block">Support</h4>
+                            <h4 className="text-white text-sm font-bold uppercase tracking-wider mb-4 border-b border-[#0cb1e9]/30 pb-2 inline-block">Company</h4>
                             <ul className="space-y-3">
-                                <li><Link className="text-slate-400 hover:text-[#0cb1e9] transition-colors text-sm font-medium" href="/">Help Center</Link></li>
-                                <li><Link className="text-slate-400 hover:text-[#0cb1e9] transition-colors text-sm font-medium" href="/">Contact Us</Link></li>
+                                <li><Link className="text-slate-400 hover:text-[#0cb1e9] transition-colors text-sm font-medium" href="/about">About Us</Link></li>
+                                <li><Link className="text-slate-400 hover:text-[#0cb1e9] transition-colors text-sm font-medium" href="/activities">Activities</Link></li>
+                                <li><Link className="text-slate-400 hover:text-[#0cb1e9] transition-colors text-sm font-medium" href="/contact">Contact Us</Link></li>
                             </ul>
                         </div>
                         <div>
