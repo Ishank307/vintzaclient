@@ -40,6 +40,13 @@ export default function SearchBar() {
     const [guests, setGuests] = useState(
         Number(searchParams.get("guests")) || 2
     )
+    const [maleCount, setMaleCount] = useState(
+        Number(searchParams.get("male")) || (Number(searchParams.get("guests")) || 2)
+    )
+    const [femaleCount, setFemaleCount] = useState(
+        Number(searchParams.get("female")) || 0
+    )
+
 
     const handleSearch = (e) => {
         e.preventDefault()
@@ -52,7 +59,7 @@ export default function SearchBar() {
         try {
             const newSearch = {
                 location,
-                query: `location=${encodeURIComponent(location)}&check_in=${format(checkInDate, "yyyy-MM-dd")}&check_out=${format(checkOutDate, "yyyy-MM-dd")}&guests=${guests}`,
+                query: `location=${encodeURIComponent(location)}&check_in=${format(checkInDate, "yyyy-MM-dd")}&check_out=${format(checkOutDate, "yyyy-MM-dd")}&guests=${guests}&male=${maleCount}&female=${femaleCount}`,
                 timestamp: Date.now()
             }
 
@@ -74,7 +81,7 @@ export default function SearchBar() {
         }
 
         router.push(
-            `/search?location=${encodeURIComponent(location)}&check_in=${format(checkInDate, "yyyy-MM-dd")}&check_out=${format(checkOutDate, "yyyy-MM-dd")}&guests=${guests}`
+            `/search?location=${encodeURIComponent(location)}&check_in=${format(checkInDate, "yyyy-MM-dd")}&check_out=${format(checkOutDate, "yyyy-MM-dd")}&guests=${guests}&male=${maleCount}&female=${femaleCount}`
         )
     }
 
@@ -85,8 +92,10 @@ export default function SearchBar() {
         setShowDates(false)
     }
 
-    const handleGuestsChange = (newGuestCount) => {
-        setGuests(newGuestCount)
+    const handleGuestsChange = ({ male, female }) => {
+        setMaleCount(male)
+        setFemaleCount(female)
+        setGuests(male + female)
         setShowGuests(false)
     }
 
@@ -178,7 +187,8 @@ export default function SearchBar() {
                     {showGuests && (
                         <div onClick={(e) => e.stopPropagation()}>
                             <GuestPicker
-                                guests={guests}
+                                maleCount={maleCount}
+                                femaleCount={femaleCount}
                                 onGuestsChange={handleGuestsChange}
                                 onClose={() => setShowGuests(false)}
                             />

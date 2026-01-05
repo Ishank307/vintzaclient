@@ -4,13 +4,13 @@ import { useState, useEffect, useRef } from "react"
 import { Minus, Plus, Users, Sparkles, User, UserCheck } from "lucide-react"
 import { Button } from "@/components/ui/Button"
 
-export default function GuestPicker({ guests, onGuestsChange, onClose, insidePanel = false }) {
+export default function GuestPicker({ maleCount, femaleCount, onGuestsChange, onClose, insidePanel = false }) {
     // Initialize split: assume mostly males or random split not preserved from backend
     // Since we only get 'guests' (total), we can't restore the exact split.
     // Defaulting: Male = total, Female = 0 (or balanced if you prefer, but simple is predictable)
     const [counts, setCounts] = useState({
-        male: guests || 1,
-        female: 0
+        male: maleCount || 1,
+        female: femaleCount || 0
     })
 
     const pickerRef = useRef(null)
@@ -28,15 +28,11 @@ export default function GuestPicker({ guests, onGuestsChange, onClose, insidePan
     }, [onClose, insidePanel])
 
     useEffect(() => {
-        // When props change, valid sync (but might overwrite user changes if parent re-renders? 
-        // usually parent only re-renders on Apply. 
-        // If current total matches prop, don't reset to keep split. 
-        // If different, reset to match prop (and lose split).
-        const currentTotal = counts.male + counts.female
-        if (guests !== currentTotal) {
-            setCounts({ male: guests || 1, female: 0 })
+        // Sync with props if they change externally (e.g. initial load or parent update)
+        if (maleCount !== undefined && femaleCount !== undefined) {
+            setCounts({ male: maleCount, female: femaleCount })
         }
-    }, [guests])
+    }, [maleCount, femaleCount])
 
     const updateCount = (type, delta) => {
         setCounts(prev => {
@@ -56,7 +52,7 @@ export default function GuestPicker({ guests, onGuestsChange, onClose, insidePan
     const totalGuests = counts.male + counts.female
 
     const handleApply = () => {
-        onGuestsChange(totalGuests)
+        onGuestsChange(counts)
         onClose()
     }
 

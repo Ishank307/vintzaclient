@@ -28,6 +28,7 @@ function SearchContent() {
     async function fetchRooms() {
       try {
         setLoading(true)
+        setError(null)
 
         const data = await searchRooms({
           location,
