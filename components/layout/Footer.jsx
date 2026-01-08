@@ -58,16 +58,16 @@ export default function Footer() {
                         </div>
                     </div>
                 </div>
-                <div className="h-px bg-slate-800 w-full mb-8"></div>
+                {/* <div className="h-px bg-slate-800 w-full mb-8"></div>
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-slate-500 text-sm font-normal text-center md:text-left">
                         © {new Date().getFullYear()} Vintza. All rights reserved.
-                    </p>
-                    <div className="flex items-center gap-2">
+                    </p> */}
+                {/* <div className="flex items-center gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#0cb1e9]/40"></span>
                         <span className="text-xs text-slate-600 font-medium tracking-widest uppercase">Luxury Travel</span>
-                    </div>
-                </div>
+                    </div> */}
+                {/* </div> */}
             </div>
         </footer>
     )

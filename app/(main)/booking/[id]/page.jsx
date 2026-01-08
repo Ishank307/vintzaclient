@@ -201,7 +201,7 @@ function BookingContent() {
 
         } catch (error) {
             console.error('Coupon validation error:', error)
-            toast.error('Failed to validate coupon. Please try again.')
+            toast.error('Failed to validate coupon. Please try again.', { duration: 2000 })
         } finally {
             setIsValidatingCoupon(false)
         }
